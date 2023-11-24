@@ -1,0 +1,65 @@
+    /* Áp dụng một số kiểu chung cho bảng */
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-family: Arial, sans-serif;
+    }
+    /* Định dạng phần tiêu đề */
+    
+    thead th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+        text-align: left;
+        padding: 8px;
+    }
+    /* Định dạng các ô trong bảng */
+    
+    tbody td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+    /* Tạo hiệu ứng khi di chuột qua dòng */
+    
+    tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+    /* Áp dụng một số kiểu chung cho biểu mẫu */
+    
+    form {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    /* Định dạng nhãn và ô nhập liệu */
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    input[type="date"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    /* Định dạng nút tìm kiếm */
+    
+    button {
+        background: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background: #0056b3;
+    }
