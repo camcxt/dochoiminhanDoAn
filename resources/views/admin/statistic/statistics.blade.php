@@ -151,6 +151,15 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div>
+                                <form action="{{ route('exportStatistic') }}" method="get">
+                                    <input type="hidden" name="start_date"
+                                        value="{{request('start_date') ?? null}}">
+                                    <input type="hidden" name="end_date"
+                                        value="{{request('end_date') ?? null}}">
+                                    <button type="submit" class="btn btn-primary">Xuất Excel</button>   
+                                </form>
+                            </div>
                         </div>       
                         <!-- /widget-content -->
                     </div>

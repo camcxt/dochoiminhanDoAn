@@ -15,16 +15,19 @@ use App\Models\Category;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\seesions;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
+use PDF;
+use Exception;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PDF;
-use Exception;
 
 class OrderController extends Controller
 {
@@ -82,7 +85,6 @@ class OrderController extends Controller
         $totalMoney = 0;
         $quantity = 0;
         $carts = Cart::content();
-
         $products  = Product::where('active', self::STATUS_ACTIVE)->limit(self::STATUS_DELETED + 1)->get();
         $provinces = Province::all();
         $productBestSell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell', '=', self::STATUS_ACTIVE)->orderBy('id', 'DESC')->paginate(self::STATUS_DELETED);
@@ -93,9 +95,9 @@ class OrderController extends Controller
         }
 
         if ($carts->isEmpty()) {
-            session()->flash('messageCartEmpty', 'Cart is empty!');
+            session()->flash('messageCartEmpty', 'Không có sản phẩm trong giỏ hàng!');
             return view('web/cart/show', compact('carts', 'products', 'productBestSell'))->with('totalMoney', $totalMoney)->with('quantity', $quantity);
-        } else {
+        }else {
             return view('web/order/add', compact('carts', 'products', 'productBestSell', 'provinces'))->with('quantity', $quantity)->with('totalMoney', $totalMoney);
         }
     }
@@ -119,10 +121,7 @@ class OrderController extends Controller
         $address = $request->address;
         $diachi = $address . '-' . $xa->name . '-' . $huyen->name . '-' . $tinh->name;
         $today = Carbon::now('Asia/Ho_Chi_Minh');
-
         $cart = Cart::content();
-
-
         $dataOrder = [
             'user_id' => $request->user_id,
             'customer_name' => $request->customer_name,
@@ -134,13 +133,14 @@ class OrderController extends Controller
             'address' => $diachi,
             'status' => "0"
         ];
-
+       
         $order = Order::create($dataOrder);
+       
         if (isset($order)) {
             $total = 0;
             if (isset($request->user_id)) {
-                $customer = Customer::find($request->user_id);
-                $customer->name = $request->customer_name;
+                $customer = User::find($request->user_id);
+                $customer->username = $request->customer_name;
                 $customer->phone = $request->customer_phone;
                 $customer->email = $request->customer_email;
                 $customer->save();
@@ -370,49 +370,47 @@ class OrderController extends Controller
         return view('admin/order/detail', compact('order', 'itemOrder'));
     }
 
+    
     public function export(Request $request)
     {
         $orders = $this->search($request->name, $request->phone, $request->email, $request->status);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $i = 3;
 
-        $column = 0;
+        $i = 3;
 
         $styleArrayTitle = [
             'font' => [
                 'bold' => true,
+                'color' => ['rgb' => 'ffffff'], // White font color
             ],
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THICK,
-                    'color' => array('rgb' => '1c1e21'),
+                    'color' => ['rgb' => '1c1e21'],
                 ],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'color' => ['rgb' => '2ed87a'],
             ],
         ];
 
         $styleArray = [
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'borders' => [
                 'outline' => [
                     'borderStyle' => Border::BORDER_THICK,
-                    'color' => array('rgb' => '1c1e21'),
+                    'color' => ['rgb' => '1c1e21'],
                 ],
             ],
         ];
-
-        $rowColor = [
-            'fill' => array(
-                'fillType' => Fill::FILL_SOLID,
-                'color' => array('rgb' => '2ed87a')
-            )
-        ];
-
+        
         $sheet->setCellValue("D3", "Name");
         $sheet->setCellValue("E3", "Phone");
         $sheet->setCellValue("F3", "Email");
@@ -420,6 +418,7 @@ class OrderController extends Controller
         $sheet->setCellValue("H3", "Amount");
         $sheet->setCellValue("I3", "Date");
         $sheet->setCellValue("J3", "Address");
+
         foreach ($orders as $item) {
             $i++;
 
@@ -439,20 +438,22 @@ class OrderController extends Controller
 
         for ($row = 3; $row <= $column; $row++) {
             if ($row % 2 == 1) {
-                $sheet->getStyle('D' . $row . ':J' . $row)->applyFromArray($rowColor);
+                $sheet->getStyle('D' . $row . ':J' . $row)->applyFromArray($styleArrayTitle);
             }
         }
 
-        $writer = new Xlsx($spreadsheet);
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
         header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header("Content-Disposition: attachment;filename=\"user_12-9.xlsx\"");
+        header("Content-Disposition: attachment;filename=\"order.xlsx\"");
         header("Cache-Control: max-age=0");
         header("Expires: Fri, 11 Nov 2011 11:11:11 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
         header("Cache-Control: cache, must-revalidate");
         header("Pragma: public");
-        $writer->save("php://output");
+        return $writer->save("php://output");
+        
     }
+    
 
     public function exportPdf($id)
     {
@@ -483,5 +484,31 @@ class OrderController extends Controller
 
         // return view('test', compact('products', 'order', 'itemOrder', 'productBestSell'));
         return $pdf->download('invoice.pdf');
+    }
+
+    public function printOrder($checkout_code){
+        // Gọi hàm để sinh HTML từ dữ liệu
+        $html = $this->printOrderConvert($checkout_code);
+       
+        // Tạo đối tượng DomPDF
+        $pdf = \App::make('dompdf.wrapper');
+        // // Chỉ định kích thước của trang (vd: Kích thước tùy chỉnh 210mm x 297mm)
+        // $pdf->setPaper([210, 297, 0, 0]);
+
+        // Load HTML và render PDF
+        $pdf->loadHTML($html);
+
+        // Hiển thị PDF trực tiếp trong trình duyệt
+        return $pdf->stream('invoice.pdf');
+        
+    }
+
+    public function printOrderConvert($checkout_code){
+        $order = Order::find($checkout_code);
+        $itemOrder = DB::select("SELECT * FROM orders join order_items on orders.id = order_items.order_id WHERE orders.customer_email like '%" . $order->customer_email . "%' and orders.id =" . $order->id);
+         // Lấy ngày và giờ hiện tại
+        $currentDateTime = Carbon::now();
+
+        return view('admin/order/invoice', compact('order', 'itemOrder','currentDateTime'))->render();
     }
 }

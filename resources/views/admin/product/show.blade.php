@@ -47,7 +47,7 @@
                                     <div class="control-group detail" style="width: 30%;">
                                         <label class="form-control detail-left">Sản phẩm</label>
                                         <input id='searchInput' style="width: 57%;" class="form-control"
-                                            name="searchInput" type='text' placeholder="Product's name"
+                                            name="searchInput" type='text' placeholder="Tên sản phẩm"
                                             value="{{ $name }}" />
                                     </div>
 

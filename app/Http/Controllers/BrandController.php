@@ -67,11 +67,11 @@ class BrandController extends Controller
             'link' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'name.required' => 'Brand name has not been entered',
-            'name.unique' => 'Brand name has been existed',
-            'link.required' => 'Link has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'name.required' => 'Tên thương hiệu chưa được nhập',
+            'name.unique' => 'Tên thương hiệu đã tồn tại',
+            'link.required' => 'Liên kế chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         $imageName = "";
@@ -96,7 +96,7 @@ class BrandController extends Controller
         // Create Brand
         $brand = Brand::create($data);
 
-        session()->flash('messageAdd', $brand->name . ' has been added.');
+        session()->flash('messageAdd', $brand->name . ' Thêm thương hiệu thành công.');
         return redirect()->route('showBrand');
     }
 
@@ -150,10 +150,10 @@ class BrandController extends Controller
             'sortOrder' => 'required|numeric',
             'link' => 'required'
         ], [
-            'name.required' => 'Brand name has not been entered',
-            'link.required' => 'Link has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'name.required' => 'Tên thương hiệu chưa được nhập',
+            'link.required' => 'Liên kế chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         $imageName = "";
@@ -180,7 +180,7 @@ class BrandController extends Controller
         //save Brand
         $brand->save();
 
-        session()->flash('messageDelete', $brand->name . ' has been updated.');
+        session()->flash('messageDelete', $brand->name . ' Cập nhật thương hiệu thành công.');
         return redirect()->route('showBrand');
     }
 
@@ -209,9 +209,9 @@ class BrandController extends Controller
             // save brand
             $brand->save();
 
-            session()->flash('messageDelete', $brand->name . ' has been deleted.');
+            session()->flash('messageDelete', $brand->name . ' Xóa thương hiệu thành công.');
         } else {
-            session()->flash('messageError', $brand->name . ' cannot be deleted.');
+            session()->flash('messageError', $brand->name . ' Xóa thương hiệu không thành công.');
         }
         return redirect()->route('showBrand');
     }

@@ -28,11 +28,13 @@ class CartController extends Controller
             'weight' => '12',
             'options' => ['image' => $request->product_image]
         ];    
-        
-        Cart::add($dataCart);
         $product = Product::find($request->product_id);
         if ($product->amount<1) {
             return redirect()->back()->with('success', 'hết hàng!');
+        }elseif($product->amount < $request->quantity){
+            return redirect()->back()->with('success', 'Không đủ số lượng sản phẩm! sản phẩm còn '.$product->amount);
+        }else{
+            Cart::add($dataCart);
         }
         return redirect()->route('show_Cart');
     }
@@ -67,14 +69,6 @@ class CartController extends Controller
     public function delete_cart($rowId)
     {
         $cart = Cart::get($rowId);
-
-        $product = Product::find($cart->id);
-
-        $newAmount = $product->amount + $cart->qty;
-
-        // $product->amount = $newAmount;
-
-        // $product->save();
 
         Cart::remove($rowId);
 
@@ -111,15 +105,16 @@ class CartController extends Controller
             if ($request->status == "minusCart") {
                 $newQuantity = $cart->qty - 1;
             } else {
-
                 $newQuantity = $cart->qty + 1;
                 if ($newQuantity > $product->amount) {
-                    $messError = "sản phẩm hết";
+                    $messError = "Không đủ số lượng sản phẩm";
+                    $newQuantity = $product->amount;
                 }
             }
             Cart::update($request->rowId, $newQuantity);
         }
         $carts = Cart::content();
-        return response()->json(['carts' => $carts, 'messError' => $messError]);
+        
+        return response()->json(['carts' => $carts, 'messError'=>$messError]);
     }
 }

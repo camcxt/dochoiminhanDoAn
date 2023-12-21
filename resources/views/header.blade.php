@@ -130,16 +130,6 @@
                         <!-- /.search-area -->
                         <!-- ============================================================= SEARCH AREA : END ============================================================= -->
                     </div>
-                    <!-- /.top-search-holder -->
-                    <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
-                        <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
-
-                        
-                        <!-- /.dropdown-cart -->
-
-                        <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= -->
-                    </div>
-                    <!-- /.top-cart-row -->
                 </div>
                 <!-- /.row -->
             </div>
@@ -223,6 +213,11 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('messError'))
+                <div style="text-align: center" id="notification" class="alert alert-success">
+                    {{ session('messError') }}
+                </div>
+            @endif
         </div>
     </div>
 </body>
@@ -241,9 +236,6 @@
 
 <script>
     $(document).ready(function() {
-        // var div = document.getElementById("alertInfo");
-        // div.style.visibility = "visible";
-        // div.style.opacity = 1;
         // Tự động ẩn thông báo sau 5 giây
         setTimeout(function() {
             $('#notification').fadeOut('slow');

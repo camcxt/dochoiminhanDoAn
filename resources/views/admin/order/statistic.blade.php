@@ -100,7 +100,7 @@
                                                 <td style="text-align: center;">
                                                     {{ $orderList->customer_phone }}</td>
                                                 <td style="text-align: right;">
-                                                    ${{ number_format($items->product_price*$items->product_quantity) }}
+                                                    {{ number_format($items->product_price*$items->product_quantity) }}đ
                                                 </td>
                                                 <td style="text-align: center;">
                                                     {{ $orderList->created_date }}</td>

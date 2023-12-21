@@ -7,10 +7,10 @@
                 <div class="span12">
                     <div class="widget ">
                         <div class="widget-content">
-                            <div class="detail">
-                                <div class="col-sm-12">
-                                    <div class="product-inner">
-                                        <h2 class="product-name">{{ $order->customer_name }}</h2>
+                            <div class="detail" >
+                                <div class="col-sm-12" style="display: flex" >
+                                    <div class="product-inner" style="width: 85%;">
+                                        <h2 class=" product-name">{{ $order->customer_name }}</h2>
                                         <div style="display: flex;"><b>Số điện thoại:</b> &ensp; <p>{{ $order->customer_phone }}
                                             </p>
                                         </div>
@@ -22,6 +22,11 @@
                                         </div>
                                         <div style="display: flex;"><b>Địa chỉ:</b> &ensp; <p>{{ $order->address }}</p>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <form action="{{ route('printOrder', $order->id) }}" method="get">
+                                            <button type="submit" class="btn btn-primary">In hóa đơn</button> 
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +58,6 @@
                                                 <div class="widget-content">
                                                     <table style="width:100%"
                                                         class="table table-striped table-bordered">
-
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:5%; text-align: center;">STT</th>
@@ -78,12 +82,12 @@
                                                                             alt="Khong tai duoc"></td>
                                                                     <td>{{ $itemOrderData->product_name }}</td>
                                                                     <td style="text-align: right;">
-                                                                        ${{ number_format($itemOrderData->product_price) }}
+                                                                        {{ number_format($itemOrderData->product_price) }}đ
                                                                     </td>
                                                                     <td style="text-align: center;">
                                                                         {{ $itemOrderData->product_quantity }}</td>
                                                                     <td style="text-align: right;">
-                                                                        ${{ number_format($itemOrderData->product_price * $itemOrderData->product_quantity) }}
+                                                                        {{ number_format($itemOrderData->product_price * $itemOrderData->product_quantity) }}đ
                                                                     </td>
                                                                     <td style="text-align: center;">{{ App\Constants\Constants::STATUS_ORDER[$itemOrderData->status ?? 0] }}
                                                                     </td>
@@ -113,15 +117,13 @@
                                                                 </tr>
                                                             @endforeach
                                                         </tbody>
-
                                                     </table>
-
                                                     <div style="margin-left: 80%;">
-                                                        <div style="display: flex;"><b>Total product:</b> &ensp; <p>
+                                                        <div style="display: flex;"><b>Số lượng:</b> &ensp; <p>
                                                                 {{ $order->total_products }}</p>
                                                         </div>
-                                                        <div style="display: flex;"><b>Total money:</b> &ensp; $<p>
-                                                                {{ number_format($order->total_money) }}</p>
+                                                        <div style="display: flex;"><b>Thành tiền:</b> &ensp; <p>
+                                                                {{ number_format($order->total_money) }}đ</p>
                                                         </div>
                                                     </div>
                                                 </div>

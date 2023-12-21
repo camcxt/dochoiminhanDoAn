@@ -76,43 +76,6 @@
                         </div>
                         <!-- /.sidebar-widget -->
                     </div>
-                    <!-- ============================================== Testimonials============================================== -->
-                    {{-- <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-                        <div id="advertisement" class="advertisement">
-                            <div class="item">
-                                <div class="avatar"><img src="assets\images\testimonials\member1.png" alt="Image">
-                                </div>
-                                <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">John Doe <span>Abc Company</span> </div>
-                                <!-- /.container-fluid -->
-                            </div>
-                            <!-- /.item -->
-
-                            <div class="item">
-                                <div class="avatar"><img src="assets\images\testimonials\member3.png" alt="Image">
-                                </div>
-                                <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
-                            </div>
-                            <!-- /.item -->
-
-                            <div class="item">
-                                <div class="avatar"><img src="assets\images\testimonials\member2.png" alt="Image">
-                                </div>
-                                <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port
-                                    mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-                                <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-                                <!-- /.container-fluid -->
-                            </div>
-                            <!-- /.item -->
-
-                        </div>
-                        <!-- /.owl-carousel -->
-                    </div>
-                    <!-- ============================================== Testimonials: END ============================================== -->
-                    <div class="home-banner"> <img src="" alt="Image"> </div> --}}
                 </div><!-- /.sidebar -->
                 <div class='col-md-9'>
                     <div class="detail-block">
@@ -124,19 +87,7 @@
                                             <a  id="alargeImage" data-lightbox="image-1" data-title="Gallery" href="../images/{{ $product->image }}">
                                                 <img  id="largeImage" width="100%" style="height: 319px" class="img-responsive" alt="" src="assets\images\blank.gif" data-echo="../images/{{ $product->image }}">
                                             </a>
-                                        </div><!-- /.single-product-gallery-item -->
-                                        {{-- @isset($images)
-                                            @foreach ($images as $key => $imageList)
-                                                @foreach (explode(', ', $imageList->image_url) as $imgUrl)
-                                               
-                                                <div class="single-product-gallery-item" id="slide{{ $key++ +1}}">
-                                                    <a data-lightbox="image-{{ $key++ +1}}" data-title="Gallery" href="../images/{{ $imgUrl }}">
-                                                        <img  width="100%" style="height: 319px" class="img-responsive" alt="" src="assets\images\blank.gif" data-echo="../images/{{ $imgUrl }}">
-                                                    </a>
-                                                </div><!-- /.single-product-gallery-item -->   
-                                                @endforeach
-                                            @endforeach
-                                        @endisset --}}
+                                        </div>
                                     </div><!-- /.single-product-slider -->
                                     <div class="single-product-gallery-thumbs gallery-thumbs">
                                         <div id="owl-single-product-thumbnails">
@@ -168,14 +119,7 @@
                                                     @endforeach
                                                 @endforeach
                                             @endisset
-                                            {{-- <div class="item">
-                                                <a class="horizontal-thumb active" data-target="#owl-single-product"
-                                                    data-slide="" href="">
-                                                    <img class="img-responsive" width="95" height="85"
-                                                        style="height: 85px" alt=""
-                                                        src="/dochoiminhan/public/noimagenews.png">
-                                                </a>
-                                            </div> --}}
+                                           
                                         </div><!-- /#owl-single-product-thumbnails -->
                                     </div><!-- /.gallery-thumbs -->
                                 </div><!-- /.single-product-gallery -->
@@ -183,18 +127,6 @@
                             <div class='col-sm-6 col-md-7 product-info-block'>
                                 <div class="product-info">
                                     <h1 class="name">{{ $product->name }}</h1>
-                                    <div class="rating-reviews m-t-20">
-                                        <div class="row">
-                                            {{-- <div class="col-sm-3">
-                                                <div class="rating rateit-small"></div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="reviews">
-                                                    <a href="#" class="lnk">( Reviews)</a>
-                                                </div>
-                                            </div> --}}
-                                        </div><!-- /.row -->
-                                    </div><!-- /.rating-reviews -->
                                     <div class="stock-container info-container m-t-10">
                                         <div class="row">
                                             <div class="col-sm-2">
@@ -224,8 +156,8 @@
                                             </div>
                                             <div class="col-sm-9">
                                                 <div class="stock-box">
-                                                    @foreach ($nameBrand as $item)
-                                                        <a href=""><span
+                                                    @foreach ($brand as $item)
+                                                        <a href="{{ route('showbyBrandweb', $item->id) }}"><span
                                                                 class="value">{{ $item->name }}</span></a>
                                                     @endforeach
                                                 </div>

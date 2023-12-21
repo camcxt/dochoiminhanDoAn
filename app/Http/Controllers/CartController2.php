@@ -113,62 +113,6 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function cong($id)
-    {
-        $cart = Cart::find($id);
-        $quantity = $cart->quantity + 1 ;
-        $cart->quantity = $quantity;
-        $cart->save();
-
-        return redirect()->route('showCart',Auth::user()->id);
-    }
-
-    public function tru($id)
-    {
-        $cart = Cart::find($id);
-        $quantity = $cart->quantity - 1 ;
-        $cart->quantity = $quantity;
-        $cart->save();
-        
-        return redirect()->route('showCart',Auth::user()->id);
-    }
-
-    public function update(Request $request, $id)
-    {
-        if( isset($request->update_cart) )
-        {
-            $carts = Cart::whereIn('id', $request->idc)->get();
-
-            foreach ( $carts as $cartData ) {
-                $cartUpdate = Cart::find($cartData->id);
-                $cartUpdate->quantity = $request->quantity[$cartData->id];
-                $cartUpdate->save();
-            }
-            
-            return redirect()->route('showCart', Auth::user()->id);
-        }else {
-            $totalMoney = 0;
-            $quantity = 0;
-            $products = []; 
-
-            if ( isset($request->search) ) {
-                $products = Product::where('active', self::STATUS_ACTIVE)->where('name','like','%'.$request->search.'%')->orderBy('sort_order', 'ASC')->paginate(2);       
-            }else {
-                $products = Product::where('active', self::STATUS_ACTIVE)->where('sort_order','=', 1)->orderBy('sort_order', 'ASC')->get(); 
-            }
-            
-            $provinces = Province::all();
-            $productBestSell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell','=', 1)->orderBy('sort_order', 'ASC')->paginate(2); 
-            $carts = Cart::whereIn('id', $request->idc)->where('user_id', $id)->get();
-            foreach ( $carts as $key => $cartData ) {
-                $totalMoney +=  floatval($cartData['product_price']) *  floatval($cartData['quantity']);
-                $quantity += $carts->qty;
-            }
-            
-            return view('web/order/add',compact('carts','products','productBestSell','provinces'))->with('quantity',$quantity)->with('totalMoney',$totalMoney);
-        }
-    }
-
     public function select_delivery(Request $request)
     {
         $data = $request->all();

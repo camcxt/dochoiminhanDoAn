@@ -56,9 +56,9 @@ class Product_imageController extends Controller
             'imageUrl'  => 'required',
             'productId' => 'required'
         ], [
-            'sortOrder.required' => 'Sort order has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'imageUrl.required' => 'Image has not been entered',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'imageUrl.required' => 'Hình ảnh chưa được nhập',
         ]);
 
         $attributes = [];
@@ -70,9 +70,9 @@ class Product_imageController extends Controller
         }
 
         Product_image::insert($attributes);
-        session()->flash('messageAdd', 'Images has been added.');
+        session()->flash('messageAdd', 'Hình ảnh được thêm thành công.');
         return redirect()->route('showImage', $request->productId);
-        return "Images uploaded successfully.";
+        return "Hình ảnh được tải lên thành công.";
     }
 
     private function handleBuildImage($fileImage)
@@ -151,8 +151,7 @@ class Product_imageController extends Controller
         session()->flash('messageAdd', $image->name . ' Xóa thành công.');
         return redirect()->route('showImage', $idp);
     }
-
-    public function home()
+    public function welcome()
     {
         $totalMoney = 0;
         $quantity = 0;
@@ -166,8 +165,8 @@ class Product_imageController extends Controller
 
         $banners = Banner::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
         $best_sell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(3);
-        $new = Product::where('active', self::STATUS_ACTIVE)->where('is_new', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(10);
-        $products = Product::where('active', self::STATUS_ACTIVE)->where('is_new', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
+        $new = Product::where('active', self::STATUS_ACTIVE)->where('is_new', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
+        $products = Product::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();  
         $order = Order_item::groupBy('product_name')->groupBy('product_id')->select('product_name', 'product_id', 'product_image', Order_item::raw('sum(product_quantity) as total'))->orderBy('total', 'desc')->paginate(10);
         $productsell = DB::select('SELECT DISTINCT order_items.product_id, products.category_id, products.brand_id, products.name, products.image, products.price,products.old_price, products.description,products.amount,products.sort_order FROM `products` JOIN `order_items` ON products.id = order_items.product_id');
         $productsale = Product::where('active', self::STATUS_ACTIVE)->whereNotNull('old_price')->orderBy('id', 'DESC')->get();

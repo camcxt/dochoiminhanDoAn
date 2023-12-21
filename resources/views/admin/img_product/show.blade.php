@@ -38,8 +38,8 @@
                                         @endforeach
                                         <div style="display: flex;"><b>Thẻ:</b> &ensp; <p>{{ $product->tags }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Giá:</b> &ensp; $<p>
-                                                {{ number_format($product->price) }}</p>
+                                        <div style="display: flex;"><b>Giá:</b> &ensp; <p>
+                                                {{ number_format($product->price) }}đ </p>
                                         </div>
                                         <div role="tabpanel">
                                             <div class="tab-content">

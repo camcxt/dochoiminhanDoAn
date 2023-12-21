@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'DejaVu Sans', sans-serif;
+    font-size: 13px;
+    background-color: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.logo {
+    background-color: #FFFFFF;
+    text-align: left;
+    float: left;
+}
+
+.company {
+    padding-top: 24px;
+    text-transform: uppercase;
+    background-color: #FFFFFF;
+    text-align: right;
+    float: right;
+    font-size: 16px;
+}
+
+.subpage {
+    padding: 1cm;
+    border: 5px red solid;
+    height: 237mm;
+    outline: 2cm #FFEAEA solid;
+}
+
+.title {
+    text-align: center;
+    position: relative;
+    color: #0000FF;
+    font-size: 24px;
+    top: 1px;
+}
+
+.footer-left {
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 24px;
+    position: relative;
+    height: 150px;
+    width: 50%;
+    color: #000;
+    float: left;
+    font-size: 13px;
+    bottom: 1px;
+}
+
+.footer-right {
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 24px;
+    position: relative;
+    height: 150px;
+    width: 50%;
+    color: #000;
+    font-size: 13px;
+    float: right;
+    bottom: 1px;
+}
+
+.TableData {
+    font-family: 'DejaVu Sans', sans-serif;
+    background: #ffffff;
+    font: 11px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    border: thin solid #d3d3d3;
+}
+
+.TableData TH {
+    background: rgba(0, 0, 255, 0.1);
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+    border: solid 1px #ccc;
+    height: 24px;
+}
+
+.TableData TR {
+    height: 24px;
+    border: thin solid #d3d3d3;
+}
+
+.TableData TR TD {
+    padding-right: 2px;
+    padding-left: 2px;
+    border: thin solid #d3d3d3;
+}

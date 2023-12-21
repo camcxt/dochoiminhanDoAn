@@ -40,7 +40,7 @@
             <div class="row" style="margin-left: 0px">
                 <div class="widget">
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item" style="width: 90%;"><i
+                        <li class="breadcrumb-item" style="width: 85%;"><i
                                 class="icon-shopping-cart"></i>
                             &emsp;ĐƠN HÀNG &emsp;</li>
                         <li>
@@ -56,8 +56,7 @@
                                     <input type="hidden" name="status"
                                         value="{{ $dataSearch['status'] }}">
                                     <a href="{{ route('statisticOrder') }}" class="btn btn-primary"><i class="icon-bar-chart"></i></a>
-                                    <button type="submit" class="btn btn-primary">Export</button>
-                                   
+                                    <button type="submit" class="btn btn-primary">Xuất Excel</button>   
                                 </form>
                             </div>
                         </li>
@@ -120,7 +119,7 @@
                                         <td style="text-align: center;">
                                             {{ $orderList->customer_phone }}</td>
                                         <td style="text-align: right;">
-                                            ${{ number_format($orderList->total_money) }}
+                                            {{ number_format($orderList->total_money) }}đ
                                         </td>
                                         <td style="text-align: center;">
                                             {{ $orderList->created_date }}</td>

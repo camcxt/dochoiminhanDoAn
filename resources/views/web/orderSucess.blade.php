@@ -28,10 +28,10 @@
 
 				
 				<div class="error-container">
-				<h2 style="color: black;">You have successfully placed your order</h2>
+				<h2 style="color: black;">Bạn đã đặt hàng thành công</h2>
 					@if (isset(Auth::user()->id))
 						@if (isset($idOrder))
-							<a href="{{ route('showItem', $idOrder) }}">Your Order</a>
+							<a href="{{ route('showItem', $idOrder) }}">Đơn hàng của bạn</a>
 						@endif
 					@endif
 					

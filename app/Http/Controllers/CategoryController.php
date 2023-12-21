@@ -59,10 +59,10 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories',
             'sortOrder' => 'required|numeric'
         ], [
-            'name.required' => 'Category name has not been entered',
-            'name.unique' => 'Category name has been existed',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'name.required' => 'Tên danh mục chưa được nhập',
+            'name.unique' => 'Tên danh mục đã tồn tại',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         // add data
@@ -75,7 +75,7 @@ class CategoryController extends Controller
         // create category
         $category = Category::create($data);
 
-        session()->flash('messageAdd', $category->name.' has been added.');
+        session()->flash('messageAdd', $category->name.' Thêm danh mục thành công.');
         return redirect()->route('showCate');
     }
 
@@ -129,9 +129,9 @@ class CategoryController extends Controller
             'name' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'name.required' => 'Category name has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'name.required' => 'Tên danh mục chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         // Category
@@ -145,7 +145,7 @@ class CategoryController extends Controller
         // save category
         $category->save();
 
-        session()->flash('messageUpdate', $category->name.' has been updated.');
+        session()->flash('messageUpdate', $category->name.' Cập nhật danh mục thành công.');
         return redirect()->route('showCate');
     }
 
@@ -174,9 +174,9 @@ class CategoryController extends Controller
             // save category
             $category->save();
 
-            session()->flash('messageDelete', $category->name.' has been deleted.');
+            session()->flash('messageDelete', $category->name.' Xóa danh mục thành công.');
         } else {
-            session()->flash('messageError', $category->name.' cannot be deleted.');
+            session()->flash('messageError', $category->name.' Xóa danh mục không thành công.');
         }
         
         return redirect()->route('showCate');

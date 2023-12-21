@@ -40,6 +40,7 @@
                                 <p><b>Số điện thoại: </b><span>{{ $order->customer_phone }}</span></p>
                                 <p><b>Email: </b><span>{{ $order->customer_email }}</span></p>
                                 <p><b>Địa chỉ: </b><span>{{ $order->address }}</span></p>
+                                <p><b>Thời gian: </b><span>{{ $order->created_date }}</span></p>
                             </div>
                             &emsp;
                             @foreach ($itemOrder as $orderItemList)

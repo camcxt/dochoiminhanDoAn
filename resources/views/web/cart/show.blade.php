@@ -19,7 +19,6 @@
         
     }
     
-
     th,
     td {
         font-family: Arial;
@@ -57,19 +56,20 @@
             <div class="row">
                 <div class="col-md-9">
                     <div>
-                        {{-- @if (session()->has('messageCartEmpty'))
+                        @if (session()->has('messageCartEmpty'))
                             <div class="alert alert-danger">
+                               
                                 {{ session('messageCartEmpty') }}
                             </div>
                         @endif
-                        @if (session()->has('messageAmount'))
-                            <div class="alert alert-danger">
-                                {{ session('messageAmount') }}
+                        @if (session()->has('messError'))
+                            <div id class="alert alert-danger">
+                                {{ session('messError') }}
                             </div>
-                        @endif
-                        <div id="messError">
-                        </div> --}}
+                        @endif   
+                        <div id="messError"></div>                     
                     </div>
+
                     <h4><b>Giỏ hàng</b></h4>
                     <div class="product-info">
                         <table style="width:100%" cellspacing="0" class="cart-table">
@@ -141,7 +141,6 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -172,12 +171,6 @@
                             </table>
                             <div>
                                 <div>
-                                    {{-- <input type="submit" value="Update Cart"
-                                    data-url="{{ route('update_Cart') }}" name="update_cart"
-                                    class="button button-update">   --}}
-                                </div>
-                                <br>
-                                <div>
                                     <a class="btn btn-primary cart-btn" style="width: 100%" href="{{ route('createOrder') }}">Đặt hàng</a> 
                                 </div>                              
                             </div>
@@ -199,6 +192,13 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="{{ asset('js/cartJS.js') }}"></script>
 <script>
+    $(document).ready(function() {
+        // Tự động ẩn thông báo sau 5 giây
+        setTimeout(function() {
+            $('#messError').fadeOut('slow');
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });  
+
     function updateCart(input) {
     var rowId = $(input).attr('data-id');
     var url = $(input).attr('data-urlupdate');
@@ -208,7 +208,7 @@
     var total = 0;
     var amount = 0;
     if (quantity <= 0) {
-        if (confirm('Do you want to delete item ' + '?')) {
+        if (confirm('Bạn có muốn xóa sản phẩm ' + '?')) {
             $.ajax({
                 method: 'GET',
                 url: urlDelete,
@@ -247,6 +247,7 @@
             },
             success: function(response) {
                 $.each(response.carts, function(key, item) {
+                    
                     amount += parseInt(item.qty);
                     totalItem = '$' + (item.price * item.qty).toLocaleString('en-US');
                     total += item.price * item.qty;
@@ -256,6 +257,7 @@
                     $('#totalCost').text(totalCost);
                     $('.totalCart').text(totalCost);
                     $('.total').text(amount);
+
                 });
                 if (response.messError != "") {
                     $('#messError').html("<div class='alert alert-danger'>" + response.messError + "</div>");

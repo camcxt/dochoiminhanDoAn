@@ -149,16 +149,17 @@ class ProductController extends Controller
             'description' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'category.required' => 'Categoy has not been entered',
-            'name.required' => 'Product name has been existed',
-            'name.unique' => 'Product name has been existed',
-            'brand.required' => 'Brand has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'price.required' => 'Price has not been entered',
-            'price.numeric' => 'Price is not number',
-            'price.max' => 'The new price must be less than the old price',
-            'description.required' => 'Description has not been entered',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'name.unique' => 'Tên sản phẩm đã tồn tại',
+            'category.required' => 'Danh mục chưa được nhập',
+            'brand.required' => 'Thương hiệu chưa được nhập',
+            'name.required' => 'Tên sản phẩm chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'price.required' => 'Giá chưa được nhập',
+            'price.numeric' => 'Giá phải là số',
+            'price.max' => 'Giá mới phải thấp hơn giá cũ',
+            'description.required' => 'Mô tả chưa được nhập',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
+            
         ]);
 
         $imageName = "";
@@ -188,7 +189,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
 
-        session()->flash('messageAdd', $product->name . ' has been added.');
+        session()->flash('messageAdd', $product->name . ' Thêm sản phẩm thành công.');
         return redirect()->route('indexProduct');
     }
 
@@ -254,9 +255,9 @@ class ProductController extends Controller
         $images = Product_image::where('active', self::STATUS_ACTIVE)->where('product_id', $id)->orderBy('sort_order', 'ASC')->get();
         $productImg = Product_image::where('active', self::STATUS_ACTIVE)->where('product_id', '=', $product->id)->orderBy('sort_order', 'ASC')->paginate(4);
         $productsale = Product::where('active', self::STATUS_ACTIVE)->whereNotNull('old_price')->orderBy('id', 'DESC')->get();
-        $nameBrand = DB::select("SELECT brands.name FROM brands JOIN products ON brands.id = products.brand_id WHERE products.id = $id");
+        $brand = DB::select("SELECT brands.id, brands.name FROM brands JOIN products ON brands.id = products.brand_id WHERE products.id = $id");
         $categories = Category::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
-        return view('web/product/show', compact('categories','nameBrand','images', 'productsale','products', 'product', 'productTag', 'productImg'))->with('totalMoney', $totalMoney)->with('quantity', $quantity);
+        return view('web/product/show', compact('categories','brand','images', 'productsale','products', 'product', 'productTag', 'productImg'))->with('totalMoney', $totalMoney)->with('quantity', $quantity);
     }
 
     public function showbyCategoryweb($id)
@@ -373,15 +374,15 @@ class ProductController extends Controller
             'description' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'category.required' => 'Categoy has not been entered',
-            'name.required' => 'Product name has been existed',
-            'brand.required' => 'Brand has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'price.required' => 'Price has not been entered',
-            'price.numeric' => 'Price is not number',
-            'price.max' => 'The new price must be less than the old price',
-            'description.required' => 'Description has not been entered',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'category.required' => 'Danh mục chưa được nhập',
+            'name.required' => 'Tên sản phẩm chưa được nhập',
+            'brand.required' => 'Thương hiệu chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'price.required' => 'Giá chưa được nhập',
+            'price.numeric' => 'Giá phải là số',
+            'price.max' => 'Giá mới phải thấp hơn giá cũ',
+            'description.required' => 'Mô tả chưa được nhập',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         // upload image
@@ -412,7 +413,7 @@ class ProductController extends Controller
         //save products
         $products->save();
 
-        session()->flash('messageUpdate', $products->name . ' has been updated.');
+        session()->flash('messageUpdate', $products->name . ' Cập nhật thành công.');
 
         return redirect()->route('indexProduct');
     }
@@ -439,7 +440,7 @@ class ProductController extends Controller
         //save product
         $product->save();
 
-        session()->flash('messageDelete', $product->name . ' has been deleted.');
+        session()->flash('messageDelete', $product->name . ' Xóa thành công.');
         return redirect()->route('indexProduct');
     }
 

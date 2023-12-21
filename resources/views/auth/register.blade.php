@@ -3,19 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Signup - Bootstrap Admin Template</title>
+    <title>Signup</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="../resources/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="../resources/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('css/bootstrap-responsive.min.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="../resources/css/font-awesome.css" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 
-    <link href="../resources/css/style.css" rel="stylesheet" type="text/css">
-    <link href="../resources/css/pages/signin.css" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/style.css')}}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('css/pages/signin.css')}}" rel="stylesheet" type="text/css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 </head>
 
@@ -33,22 +35,22 @@
                     <span class="icon-bar"></span>
                 </a>
 
-                <a class="brand" href="index.html">
-                    Bootstrap Admin Template
+                <a class="brand" href="{{ route('trangchu') }}">
+                    ĐỒ CHƠI MINH AN
                 </a>
 
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         <li class="">
-                            <a href="{{route('login')}}" class="">
-                                Already have an account? Login now
+                            <a href="{{ route('login') }}" class="">
+                                Bạn đã có tài khoản? Đăng nhập ngay bây giờ
                             </a>
 
                         </li>
                         <li class="">
-                            <a href="{{route('trangchu')}}" class="">
-                                <i class="icon-chevron-left"></i>
-                                Back to Homepage
+                            <a href="{{ route('trangchu') }}" class="">
+                                <i class="icon fa fa-home"></i>
+								Quay lại trang chủ
                             </a>
 
                         </li>
@@ -71,61 +73,75 @@
 
             <form action="{{ route('register') }}" method="post">
                 @csrf
-                <h1>Signup for Free Account</h1>
+                <div style="text-align: center">
+                    <h1>Cùng là một nhà</h1>
+                </div>
 
                 <div class="login-fields">
 
-                    <p>Create your free account:</p>
+                    <p><br></p>
 
                     <div class="field">
                         <label for="firstname">First Name:</label>
-                        <input type="text" id="firstname" name="firstname" value="" placeholder="First Name"
+                        <input type="text" id="firstname" name="firstname" value="" placeholder="nhập họ của bạn"
                             class="login" />
+                            @error('firstname')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                     <!-- /field -->
 
                     <div class="field">
                         <label for="lastname">Name:</label>
-                        <input type="text" id="lastname" name="name" value="" placeholder="Name" class="login" />
+                        <input type="text" id="lastname" name="name" value="" placeholder="Nhập tên của bạn"
+                            class="login" />
+                            @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div> <!-- /field -->
 
                     <div class="field">
                         <label for="phone">Phone:</label>
-                        <input type="phone" id="phone" name="phone" value="" placeholder="Phone" class="login" />
+                        <input type="phone" id="phone" name="phone" value="" placeholder="Nhập số điện thoại"
+                            class="login" />
                         @error('phone')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div> <!-- /field -->
 
 
                     <div class="field">
                         <label for="email">Email Address:</label>
-                        <input type="text" id="email" name="email" value="" placeholder="Email"
+                        <input type="email" id="email" name="email" value="" placeholder="Nhập địa chỉ email"
                             class="login form-control @error('email') is-invalid @enderror" autocomplete="email" />
                         @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div> <!-- /field -->
 
                     <div class="field">
                         <label for="password">Password:</label>
-                        <input type="password" id="password" name="password" value="" placeholder="Password"
+                        <input type="password" id="password" name="password" value="" placeholder="Nhập password"
                             class="login" />
                         @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
                         @enderror
                     </div> <!-- /field -->
 
                     <div class="field">
                         <label for="confirm_password">Confirm Password:</label>
                         <input type="password" id="confirm_password" name="password_confirmation" value=""
-                            placeholder="Confirm Password" autocomplete="new-password" class="login" />
+                            placeholder="Nhập lại password" autocomplete="new-password" class="login" />
                     </div> <!-- /field -->
 
                 </div> <!-- /login-fields -->
@@ -133,12 +149,12 @@
                 <div class="login-actions">
 
                     <span class="login-checkbox">
-                        <input id="Field" name="Field" type="checkbox" class="field login-checkbox" value="First Choice"
-                            tabindex="4" />
-                        <label class="choice" for="Field">Agree with the Terms & Conditions.</label>
+                        <input id="Field" name="Field" type="checkbox" class="field login-checkbox"
+                            value="First Choice" tabindex="4" />
+                        {{-- <label class="choice" for="Field">Agree with the Terms & Conditions.</label> --}}
                     </span>
 
-                    <button class="button btn btn-primary btn-large">Register</button>
+                    <button class="button btn btn-primary btn-large">Đăng ký</button>
 
                 </div> <!-- .actions -->
 
@@ -151,7 +167,7 @@
 
     <!-- Text Under Box -->
     <div class="login-extra">
-        Already have an account? <a href="login.html">Login to your account</a>
+        Bạn đã có tài khoản?  <a href="{{ route('login') }}">Đăng nhập ngay bây giờ</a>
     </div> <!-- /login-extra -->
 
 

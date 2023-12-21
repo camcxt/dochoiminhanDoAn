@@ -28,10 +28,6 @@
                                     </span> </a><a href="{{ route('indexUser') }}" class="shortcut"><i
                                         class="shortcut-icon icon-user"></i><span class="shortcut-label">Tài khoản
                                     </span> </a>
-                                {{-- <a href="{{ route('indexReport') }}" class="shortcut"><i
-                                        class="shortcut-icon icon-bullhorn"></i><span
-                                        class="shortcut-label">Report</span>
-                                    </a> --}}
                                 <a href="{{ route('indexOrder') }}" class="shortcut"><i
                                         class="shortcut-icon icon-shopping-cart"></i>
                                     <span class="shortcut-label">Đơn hàng</span> </a>
@@ -47,6 +43,41 @@
                         <div class="widget-header"> 
                             <h3> Top sản phẩm bán chạy</h3>
                         </div>
+                        <form action=" {{ route('homeAdmin') }} " method="get">
+                            <div class="search"> &emsp;
+                                <div class="search-element" style="display: flex">
+                                    <div class="control-group detail" style="width: 40%;">
+                                        <label class="form-control detail-left">Trạng thái:</label>
+                                        <select class="detail-right" style="height: 28px;" name="month">
+                                            @if ($month==1)
+                                            <option value="1">Tháng gần nhất</option>
+                                            <option value="2">Hai tháng gần nhất</option>
+                                            <option value="3">Ba Tháng gần nhất</option>
+                                            @elseif($month==2)
+                                            <option value="2">Hai tháng gần nhất</option>
+                                            <option value="1">Tháng gần nhất</option>
+                                            <option value="3">Ba Tháng gần nhất</option>
+                                            @elseif($month==3)
+                                            <option value="3">Ba Tháng gần nhất</option>
+                                            <option value="1">Tháng gần nhất</option>
+                                            <option value="2">Hai tháng gần nhất</option>
+                                            @else
+                                            <option value="1">Tháng gần nhất</option>
+                                            <option value="2">Hai tháng gần nhất</option>
+                                            <option value="3">Ba Tháng gần nhất</option>
+                                            @endif
+                                        </select>                                                            
+                                    </div>
+                                    <div class="control-group" style="padding-top: 18px">
+                                        <button class="btn btn-secondary" 
+                                            type="submit"
+                                            style="color: black ;border-radius: 20px; height: 90%;"><i
+                                                class="icon-search"></i></button>
+                                        &emsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -57,17 +88,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($order as $key => $orderList)
-                                    <tr>
-                                        <td style="text-align: center;">{{ $key + 1 }}</td>
-                                        <td style="text-align: center;"><a
-                                                href="{{ route('showImage', $orderList->product_id) }}">{{ $orderList->product_name }}</a>
-                                        </td>
-                                        <td style="text-align: center;"><img
-                                                src="/dochoiminhan/public/images/{{ $orderList->product_image }}"
-                                                width="100px" alt="Khong tai duoc"></td>
-                                        <td style="text-align: center;">{{ $orderList->total }}</td>
-                                    </tr>
+                                @foreach ($bestSale as $key => $product)
+                                    @foreach($topProductSale as $iteam)
+                                        @if ($product->order_id == $iteam->id) 
+                                            <tr>
+                                                <td style="text-align: center;"></td>
+                                                <td style="text-align: center;"><a
+                                                        href="{{ route('showImage', $product->product_id) }}">{{ $product->product_name }}</a>
+                                                </td>
+                                                <td style="text-align: center;"><img
+                                                        src="/dochoiminhan/public/images/{{ $product->product_image }}"
+                                                        width="100px" alt="Khong tai duoc"></td>
+                                                <td style="text-align: center;">{{ $product->total }}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach   
                                 @endforeach
                             </tbody>
                         </table>
@@ -127,16 +162,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orderData as $key => $orderListTop)
+                                        @foreach ($orderData as $key => $orderListTop)  
                                             <tr>
                                                 <td style="text-align: center;">{{ $key + 1 }}</td>
                                                 <td style="text-align: left;"><a
                                                         href="{{ route('showbyId', $orderListTop->id) }}">{{ $orderListTop->customer_name }}</a>
                                                 </td>
                                                 <td style="text-align: right;">
-                                                    ${{ number_format($orderListTop->total_money) }}</td>
+                                                    {{ number_format($orderListTop->total_money) }}đ</td>
                                                 <td style="text-align: center;">{{ $orderListTop->created_date }}</td>
-                                            </tr>
+                                            </tr>       
                                         @endforeach
                                     </tbody>
                                 </table>

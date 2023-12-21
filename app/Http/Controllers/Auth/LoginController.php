@@ -46,7 +46,7 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             
-
+            
             if (Auth::user()->permission == 0 || Auth::user()->permission == 1) {
                 return redirect()->route('homeAdmin');
             } else {
@@ -54,7 +54,7 @@ class LoginController extends Controller
             }
 
         } else {
-            session()->flash('messageLoginError', 'User account or password incorrect');
+            session()->flash('messageLoginError', 'Tài khoản mật khẩu không đúng');
             return redirect()->route('login');
         }
     }

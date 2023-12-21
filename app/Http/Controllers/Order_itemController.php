@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\TextUI\XmlConfiguration\Constant;
+use Illuminate\Support\Carbon;
 
 class Order_itemController extends Controller
 {
@@ -78,6 +79,7 @@ class Order_itemController extends Controller
         DB::beginTransaction();
         try {
             $item = Order_item::find($id);
+            $currentDateTime = Carbon::now();
 
             if ($item) {
                 $product = Product::find($item->product_id);
@@ -95,16 +97,19 @@ class Order_itemController extends Controller
 
                 if ($item->status == Constants::IN_ACTIVE) {
                     $product->update(['amount' => $newAmount]);
+                    $order->update(['created_date'=> $currentDateTime]);
                 }
 
                 $item->update(["status" => ((int)$item->status ?? 0) + 1]);
 
                 if ($item->status == Constants::PAID) {
                     $order->update(['status'=> 1]);
+                    $order->update(['created_date'=> $currentDateTime]);
                 }
 
                 if ($item->status == Constants::CANCEL) {
                     $order->update(['status'=> 2]);
+                    $order->update(['created_date'=> $currentDateTime]);
                 }
                 DB::commit();
                 session()->flash('message', 'Đã cập nhật trạng thái!');
@@ -137,12 +142,14 @@ class Order_itemController extends Controller
         DB::beginTransaction();
         try {
             $order = Order_item::find($id);
+            $currentDateTime = Carbon::now();
             if ($order) {
                 $product = Product::find($order->product_id);
 
                 if ($order->status > Constants::IN_ACTIVE) {
                     $newAmount = ($product->amount ?? 0) + ($order->product_quantity ?? 0);
                     $product->update(['amount' => $newAmount]);
+                    $order->update(['created_date'=> $currentDateTime]);
                 }
 
                 $order->update(['status' => Constants::CANCEL]);

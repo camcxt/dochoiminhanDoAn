@@ -88,65 +88,162 @@
 </style>
 
 <div class="main">
-    <div class="container-fluid">
-        <div class="card mb-4">
+    <div class="tabbable">
+        <div>
+            @if (session()->has('messageAdd'))
+                <div class="alert alert-success">
+                    {{ session('messageAdd') }}
+                </div>
+            @endif
 
-            <div class="card-header">
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"  style="width: 95%;"><i class="fas fa-user"></i> TÀI KHOẢN &emsp; &emsp;</li>
-                    <li class="breadcrumb-item"> <a href="{{ route('createUser') }}" class="btn btn-primary"><i class="icon-plus"></i> </a> </li>
-                </ol>
-            </div>
+            @if (session()->has('messageUpdate'))
+                <div class="alert alert-success">
+                    {{ session('messageUpdate') }}
+                </div>
+            @endif
 
-            <div class="card-body">
-                <div class="table-responsive">
-                    <div class="widget-content">
+            @if (session()->has('messageDelete'))
+                <div class="alert alert-success">
+                    {{ session('messageDelete') }}
+                </div>
+            @endif
 
-                        <table style="width:100%" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width:45%">Tên tài khoản</th>
-                                    <th style="width:30%;">Email</th>
-                                    <th style="width:15%; text-align: center;">Số điện thoại</th>
-                                    <th style="width:10%">Tác vụ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $userData)
-                                    @if ($userData->id != Auth::user()->id)
-                                        <tr>
-                                            <td>{{ $userData->username }}</td>
-                                            <td>{{ $userData->email }}</td>
-                                            <td style="text-align: center;">{{ $userData->phone }}</td>
-                                            <td style="text-align: center;">
-                                                <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="icon-edit"></i></a>
-                                                @if (Auth::user()->permission == 0)
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff ?');" href="{{ route('destroyUser', $userData->id) }}"> <i class="icon-trash"></i></a>
+            @if (session()->has('messageError'))
+                <div class="alert alert-danger">
+                    {{ session('messageError') }}
+                </div>
+            @endif
+        </div>
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="#user" data-toggle="tab">TÀI KHOẢN NHÂN VIÊN</a>
+            </li>
+            <li ><a href="#guest" data-toggle="tab">TÀI KHOẢN KHÁCH HÀNG</a></li>
+        </ul>
+        <br>
+        <div class="tab-content">
+            <div class="tab-pane active" id="user">
+                <div class="container-fluid">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <ol class="breadcrumb mb-4">
+                                <li class="breadcrumb-item" style="width: 95%;"><i class="fas fa-user"></i> TÀI KHOẢN &emsp;
+                                    &emsp;</li>
+                                @if (Auth::user()->permission == 0)
+                                <li class="breadcrumb-item"> <a href="{{ route('createUser') }}" class="btn btn-primary"><i
+                                            class="icon-plus"></i> </a> </li>
+                                @endif
+                            </ol>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="widget-content">
+                                    <table style="width:100%" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:45%">Tên tài khoản</th>
+                                                <th style="width:30%;">Email</th>
+                                                <th style="width:15%; text-align: center;">Số điện thoại</th>
+                                                <th style="width:10%">Tác vụ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($users as $userData)
+                                                @if ($userData->id != Auth::user()->id)
+                                                    <tr>
+                                                        <td>{{ $userData->username }}</td>
+                                                        <td>{{ $userData->email }}</td>
+                                                        <td style="text-align: center;">{{ $userData->phone }}</td>
+                                                        <td style="text-align: center;">
+                                                            <a class="btn btn-success"
+                                                                href="{{ route('editUser', $userData->id) }}"><i
+                                                                    class="icon-edit"></i></a>
+                                                            @if (Auth::user()->permission == 0)
+                                                                <a class="btn btn-danger"
+                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản nhân viên này ?');"
+                                                                    href="{{ route('destroyUser', $userData->id) }}"> <i
+                                                                        class="icon-trash"></i></a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
                                                 @endif
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <div class="center">
+                            <div class="pagination">
+                                <li>{!! $users->links() !!}</li>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="span12">
-        <div class="center">
-            <div class="pagination">
-                 <li>{!! $users->links() !!}</li>
+            <div class="tab-pane " id="guest">
+                <div class="container-fluid">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <ol class="breadcrumb mb-4">
+                                <li class="breadcrumb-item" style="width: 95%;"><i class="fas fa-user"></i> TÀI KHOẢN &emsp;
+                                    &emsp;</li>
+                            </ol>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="widget-content">
+                                    <table style="width:100%" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:45%">Tên tài khoản</th>
+                                                <th style="width:30%;">Email</th>
+                                                <th style="width:15%; text-align: center;">Số điện thoại</th>
+                                                <th style="width:10%">Tác vụ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($guest as $guestData)
+                                                    <tr>
+                                                        <td>{{ $guestData->username }}</td>
+                                                        <td>{{ $guestData->email }}</td>
+                                                        <td style="text-align: center;">{{ $guestData->phone }}</td>
+                                                        <td style="text-align: center;">
+                                                                <a class="btn btn-danger"
+                                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản khách hàng này ?');"
+                                                                    href="{{ route('destroyGuest', $guestData->id) }}"> <i
+                                                                        class="icon-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <div class="center">
+                            <div class="pagination">
+                                <li>{!! $guest->links() !!}</li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+
+
 
 @include ('admin.footer')
 <!-- /footer -->

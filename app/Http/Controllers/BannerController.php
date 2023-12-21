@@ -60,11 +60,11 @@ class BannerController extends Controller
             'content' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'title.required' => 'Title has not been entered',
-            'title.unique' => 'Title has been existed',
-            'content.required' => 'Content has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'title.required' => 'Tiêu đề chưa được nhập',
+            'title.unique' => 'Tiêu đề đã tồn tại',
+            'content.required' => 'Nội dung chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         $imageName = "";
@@ -89,7 +89,7 @@ class BannerController extends Controller
         //create brand
         $banner = Banner::create($data);
 
-        session()->flash('messageAdd', $banner->name.' has been added');
+        session()->flash('messageAdd', $banner->name.' Thêm Thành công');
         return redirect()->route('indexBanners');
     }
 
@@ -143,10 +143,10 @@ class BannerController extends Controller
             'content' => 'required',
             'sortOrder' => 'required|numeric'
         ], [
-            'title.required' => 'Title has not been entered',
-            'content.required' => 'Content has not been entered',
-            'sortOrder.numeric' => 'Sort order is not number',
-            'sortOrder.required' => 'Sort order has not been entered'
+            'title.required' => 'Tiêu đề chưa được nhập',
+            'content.required' => 'Nội dung chưa được nhập',
+            'sortOrder.numeric' => 'Thứ tự sắp xếp phải là số',
+            'sortOrder.required' => 'Thứ tự sắp xếp chưa được nhập'
         ]);
 
         //upload banner
@@ -172,7 +172,7 @@ class BannerController extends Controller
         //save banner
         $banner->save();
 
-        session()->flash('messageUpdate', $banner->name.' has been update');
+        session()->flash('messageUpdate', $banner->name.' Cập nhật thành công');
         return redirect()->route('indexBanners');
     }
 
@@ -198,7 +198,7 @@ class BannerController extends Controller
         //save banner
         $banner->save();
 
-        session()->flash('messageDelete', $banner->name.' has been deleted');
+        session()->flash('messageDelete', $banner->name.' Xóa thành công');
         return redirect()->route('indexBanners');
     }
 

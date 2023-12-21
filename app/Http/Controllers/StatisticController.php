@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use function GuzzleHttp\Promise\all;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class StatisticController extends Controller
 {
@@ -40,7 +45,6 @@ class StatisticController extends Controller
         $endDate = $request->input('end_date');
         $endDate1 = Carbon::parse($endDate)->addDay();
         $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select( Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_products) as totalProducts'),Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
-        
         foreach ($sales as $value) {
             $totalMoneyProduct += $value->totalMoney;
         }
@@ -77,6 +81,84 @@ class StatisticController extends Controller
       
         ];
         return view('admin/statistic/statistics', compact('sales', 'revenueData','productCounts'), $viewData);
+    }
+    public function export(Request $request)
+    {
+        // Lấy danh sách doanh thu
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        $endDate1 = Carbon::parse($endDate)->addDay();
+        $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select( Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_products) as totalProducts'),Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $i = 3;
+
+        
+        $styleArrayTitle = [
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'ffffff'], // White font color
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THICK,
+                    'color' => ['rgb' => '1c1e21'],
+                ],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'color' => ['rgb' => '2ed87a'],
+            ],
+        ];
+
+        $styleArray = [
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+            ],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THICK,
+                    'color' => ['rgb' => '1c1e21'],
+                ],
+            ],
+        ];
+        
+        $sheet->setCellValue("D3", "Ngày bán");
+        $sheet->setCellValue("E3", "Số lượng");
+        $sheet->setCellValue("F3", "Tổng tiền");
+
+        foreach ( $sales as $item) {
+            $i++;
+
+            $column = $i;
+
+            $sheet->setCellValue("D" . $i, $item->day);
+            $sheet->setCellValue("E" . $i, $item->totalProducts);
+            $sheet->setCellValue("F" . $i, $item->totalMoney);
+        }
+
+        $sheet->getStyle('D3:F3')->applyFromArray($styleArrayTitle);
+        $sheet->getStyle('D4:F' . $column)->applyFromArray($styleArray);
+
+        for ($row = 3; $row <= $column; $row++) {
+            if ($row % 2 == 1) {
+                $sheet->getStyle('D' . $row . ':F' . $row)->applyFromArray($styleArrayTitle);
+            }
+        }
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment;filename=\"sales.xlsx\"");
+        header("Cache-Control: max-age=0");
+        header("Expires: Fri, 11 Nov 2011 11:11:11 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: cache, must-revalidate");
+        header("Pragma: public");
+        return $writer->save("php://output");
+        
     }
   
 }

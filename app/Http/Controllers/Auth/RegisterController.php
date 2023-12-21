@@ -54,10 +54,19 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'firstname' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'numeric', 'min:10'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],[
+            'firstname.required'=> 'Tên bạn là gì?',
+            'name.required'=> 'Tên bạn là gì?',
+            'phone.required'=> 'Nhập đúng số điện thoại',
+            'phone.numeric'=> 'Nhập đúng số điện thoại',
+            'email.required'=> 'Bạn cần sử dụng thông tin này để đăng nhập và đặt lại mật khẩu',
+            'email.unique'=> 'Bạn cần sử dụng thông tin này để đăng nhập và đặt lại mật khẩu',
+            'password.required'=> 'Nhập mật khẩu có tối thiểu 8 ký tự',
         ]);
     }
 
@@ -69,12 +78,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $name = $data['lastname']."".$data['firstname'];
-        $dataCustomer = [
-            'active' => "1",
-        ];
-        Customer::create($dataCustomer);
-        $name = $data['name'] . ' ' . $data['firstname'];
+        
+        $name = $data['firstname']. ' ' . $data['name']  ;
+        
         return User::create([
             'username' => $name,
             'phone' => $data['phone'],

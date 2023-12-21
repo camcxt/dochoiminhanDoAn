@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PDF;
 
 class ImportController extends Controller
 {
+    
+
     public function import(Request $request)
     {
         // $brand = new BrandController();

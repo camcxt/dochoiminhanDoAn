@@ -41,6 +41,7 @@ $(document).ready(function() {
                 });
                 if (response.messError != "") {
                     $('#messError').html("<div class='alert alert-danger'>" + response.messError + "</div>");
+
                 }
             }
         });
@@ -52,7 +53,7 @@ $(document).ready(function() {
         var _this = $(this);
         var total = 0;
         var amount = 0;
-        if (confirm('Do you want to delete item ' + itemName + '?')) {
+        if (confirm('Bạn có muốn xóa sản phẩm ' + itemName + '?')) {
             $.ajax({
                 method: 'GET',
                 url: url,
@@ -64,7 +65,6 @@ $(document).ready(function() {
                         totalCost = total.toLocaleString('en-US') + ' đ';
                         totalItem = item.price * item.qty;
                     });
-
                     if (jQuery.isEmptyObject(response.carts)) {
                         $('#totalCost').text("0");
                         $('.totalCart').text("0");
@@ -95,7 +95,7 @@ $(document).ready(function() {
         var amount = 0;
         if (quantity == 1) {
             if (status == 'minusCart') {
-                if (confirm('Do you want to delete item ' + '?')) {
+                if (confirm('Bạn có muốn xóa sản phẩm ' + '?')) {
                     $.ajax({
                         method: 'GET',
                         url: urlDelete,

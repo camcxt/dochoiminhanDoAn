@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [App\Http\Controllers\Product_imageController::class, 'home'])->name('trangchu');
+Route::get('/', [App\Http\Controllers\Product_imageController::class, 'welcome'])->name('trangchu');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -73,6 +73,7 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::get('/showbyId/{id}', [App\Http\Controllers\OrderController::class, 'showbyId'])->name('showbyId');
     Route::get('/updateOrder/{id}', [App\Http\Controllers\OrderController::class, 'update'])->name('updateOrder');
     Route::get('/exportOrder', [App\Http\Controllers\OrderController::class, 'export'])->name('exportOrder');
+    Route::get('/printOrder/{checkout_code}', [App\Http\Controllers\OrderController::class, 'printOrder'])->name('printOrder');
     Route::post('/order/update/{id}', [App\Http\Controllers\Order_itemController::class, 'update'])->name('order.update');
     Route::post('/order/cancel/{id}', [App\Http\Controllers\Order_itemController::class, 'cancel'])->name('order.cancel');
 
@@ -83,9 +84,12 @@ Route::group(['middleware' => 'checkAdmin'], function () {
     Route::get('/editUser/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('editUser');
     Route::post('/updateUser/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('updateUser');
     Route::get('/destroyUser/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('destroyUser');
+    Route::get('/destroyGuest/{id}', [App\Http\Controllers\UserController::class, 'destroyGuest'])->name('destroyGuest');
 
     //statistic
     Route::get('/indexStatistic', [App\Http\Controllers\StatisticController::class, 'index'])->name('indexStatistic');
+    Route::get('/exportStatistic', [App\Http\Controllers\StatisticController::class, 'export'])->name('exportStatistic');
+    
 });
 
 //product
@@ -133,10 +137,6 @@ Route::group(['middleware' => 'checkUser'], function () {
     
 });
 
-
-//Comment
-Route::post('/storeComment', [App\Http\Controllers\CommentController::class, 'store'])->name('storeComment');
-Route::post('/updateComment', [App\Http\Controllers\CommentController::class, 'update'])->name('updateComment');
 
 //Report
 Route::get('/indexReport', [App\Http\Controllers\ReportController::class, 'index'])->name('indexReport');
