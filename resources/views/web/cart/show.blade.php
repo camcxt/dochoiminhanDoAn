@@ -16,9 +16,9 @@
     table {
         border-collapse: collapse;
         width: 100%;
-        
+
     }
-    
+
     th,
     td {
         font-family: Arial;
@@ -27,7 +27,7 @@
         text-align: center;
         border-bottom: 1px solid #ddd;
     }
-    
+
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -47,7 +47,7 @@
         padding: 2rem;
         margin-top: 4rem;
     }
-    
+
 </style>
 
 <body class="cnt-home" style="background-color: #FFFFFF">
@@ -58,7 +58,7 @@
                     <div>
                         @if (session()->has('messageCartEmpty'))
                             <div class="alert alert-danger">
-                               
+
                                 {{ session('messageCartEmpty') }}
                             </div>
                         @endif
@@ -66,8 +66,8 @@
                             <div id class="alert alert-danger">
                                 {{ session('messError') }}
                             </div>
-                        @endif   
-                        <div id="messError"></div>                     
+                        @endif
+                        <div id="messError"></div>
                     </div>
 
                     <h4><b>Giỏ hàng</b></h4>
@@ -95,11 +95,11 @@
                                         <td class="product-thumbnail">
                                             <a href="{{ route('showProduct', $cartList->id) }}"><img width="145"
                                                     height="145" alt="poster_1_up" class="shop_thumbnail"
-                                                    src="/dochoiminhan/public/images/{{ $cartList->options->image }}"></a>
+                                                    src="../images/{{ $cartList->options->image }}"></a>
                                         </td>
                                         <td class="product-name" >
                                             <h4><a
-                                                style="color: #000000" 
+                                                style="color: #000000"
                                                 href="{{ route('showProduct', $cartList->id) }}">{{ $cartList->name }}</a></h4>
                                         </td>
                                         <td class="product-price">
@@ -148,7 +148,7 @@
                 <div class="col-md-3">
                     <div class="cart-collaterals" >
                         <div class="cart_totals ">
-                            <h4><i class="fa fa-list-alt" aria-hidden="true"></i> <b> Tóm tắt đơn hàng</b></h4>                                                       
+                            <h4><i class="fa fa-list-alt" aria-hidden="true"></i> <b> Tóm tắt đơn hàng</b></h4>
                             <table cellspacing="0" >
                                 <tbody>
                                     <tr class="cart-subtotal">
@@ -166,20 +166,20 @@
                                                     class="amount totalCart">{{ number_format($totalMoney) }} đ</span></strong>
                                         </td>
                                     </tr>
-                                    
+
                                 </tbody>
                             </table>
                             <div>
                                 <div>
-                                    <a class="btn btn-primary cart-btn" style="width: 100%" href="{{ route('createOrder') }}">Đặt hàng</a> 
-                                </div>                              
+                                    <a class="btn btn-primary cart-btn" style="width: 100%" href="{{ route('createOrder') }}">Đặt hàng</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> <!-- /.row -->
         </div>
-    </div>   
+    </div>
 </body>
 <hr >
 @include('footer')
@@ -197,7 +197,7 @@
         setTimeout(function() {
             $('#messError').fadeOut('slow');
         }, 5000); // 5000 milliseconds = 5 seconds
-    });  
+    });
 
     function updateCart(input) {
     var rowId = $(input).attr('data-id');
@@ -247,7 +247,7 @@
             },
             success: function(response) {
                 $.each(response.carts, function(key, item) {
-                    
+
                     amount += parseInt(item.qty);
                     totalItem = '$' + (item.price * item.qty).toLocaleString('en-US');
                     total += item.price * item.qty;

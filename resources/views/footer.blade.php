@@ -7,7 +7,7 @@
             <h4 class="module-title">Liên hệ</h4>
           </div>
           <!-- /.module-heading -->
-          
+
           <div class="module-body">
             <ul class="toggle-footer" >
               <li class="media">
@@ -29,16 +29,16 @@
               </li>
             </ul>
           </div>
-          <!-- /.module-body --> 
+          <!-- /.module-body -->
         </div>
         <!-- /.col -->
-        
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
             <h4 class="module-title">Dịch vụ khách hàng</h4>
           </div>
           <!-- /.module-heading -->
-          
+
           <div class="module-body">
             <ul class='list-unstyled'>
               <li class="first"><a href="#" title="Contact us">Tài khoản của tôi</a></li>
@@ -48,16 +48,16 @@
               <li class="last"><a href="#" title="Where is my order?">Trung tâm trợ giúp</a></li>
             </ul>
           </div>
-          <!-- /.module-body --> 
+          <!-- /.module-body -->
         </div>
         <!-- /.col -->
-        
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
             <h4 class="module-title">Tập đoàn</h4>
           </div>
           <!-- /.module-heading -->
-          
+
           <div class="module-body">
             <ul class='list-unstyled'>
               <li class="first"><a title="Your Account" href="#">Về chúng tôi</a></li>
@@ -67,16 +67,16 @@
               <li class="last"><a title="Orders History" href="#">Tìm kiếm nâng cao</a></li>
             </ul>
           </div>
-          <!-- /.module-body --> 
+          <!-- /.module-body -->
         </div>
         <!-- /.col -->
-        
+
         <div class="col-xs-12 col-sm-6 col-md-3">
           <div class="module-heading">
             <h4 class="module-title">Tại sao chọn chúng tôi</h4>
           </div>
           <!-- /.module-heading -->
-          
+
           <div class="module-body">
             <ul class='list-unstyled'>
               <li class="first"><a href="#" title="About us">Hướng dẫn mua sắm</a></li>
@@ -86,7 +86,7 @@
               <li class=" last"><a href="contact-us.html" title="Suppliers">Liên hệ chúng tôi</a></li>
             </ul>
           </div>
-          <!-- /.module-body --> 
+          <!-- /.module-body -->
         </div>
       </div>
     </div>
@@ -107,30 +107,30 @@
       <div class="col-xs-12 col-sm-6 no-padding">
         <div class="clearfix payment-methods">
           <ul>
-            <li><img src="/dochoiminhan/public/assets/images/payments/1.png" alt=""></li>
-            <li><img src="/dochoiminhan/public/assets/images/payments/2.png" alt=""></li>
-            <li><img src="/dochoiminhan/public/assets/images/payments/3.png" alt=""></li>
-            <li><img src="/dochoiminhan/public/assets/images/payments/4.png" alt=""></li>
-            <li><img src="/dochoiminhan/public/assets/images/payments/5.png" alt=""></li>
+            <li><img src="../assets/images/payments/1.png" alt=""></li>
+            <li><img src="../assets/images/payments/2.png" alt=""></li>
+            <li><img src="../assets/images/payments/3.png" alt=""></li>
+            <li><img src="../assets/images/payments/4.png" alt=""></li>
+            <li><img src="../assets/images/payments/5.png" alt=""></li>
           </ul>
         </div>
-        <!-- /.payment-methods --> 
+        <!-- /.payment-methods -->
       </div>
     </div>
   </div>
 </footer>
-<!-- JavaScripts placed at the end of the document so the pages load faster --> 
-<script src="{{ asset('assets/js/jquery-1.11.1.min.js')}}"></script> 
-<script src="{{ asset('assets/js/bootstrap.min.js')}}"></script> 
-<script src="{{ asset('assets/js/bootstrap-hover-dropdown.min.js')}}"></script> 
-<script src="{{ asset('assets/js/owl.carousel.min.js')}}"></script> 
-<script src="{{ asset('assets/js/echo.min.js')}}"></script> 
-<script src="{{ asset('assets/js/jquery.easing-1.3.min.js')}}"></script> 
-<script src="{{ asset('assets/js/bootstrap-slider.min.js')}}"></script> 
-<script src="{{ asset('assets/js/jquery.rateit.min.js')}}"></script> 
-<script type="text/javascript" src="{{ asset('assets/js/lightbox.min.js')}}"></script> 
-<script src="{{ asset('assets/js/bootstrap-select.min.js')}}"></script> 
-<script src="{{ asset('assets/js/wow.min.js')}}"></script> 
+<!-- JavaScripts placed at the end of the document so the pages load faster -->
+<script src="{{ asset('assets/js/jquery-1.11.1.min.js')}}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('assets/js/bootstrap-hover-dropdown.min.js')}}"></script>
+<script src="{{ asset('assets/js/owl.carousel.min.js')}}"></script>
+<script src="{{ asset('assets/js/echo.min.js')}}"></script>
+<script src="{{ asset('assets/js/jquery.easing-1.3.min.js')}}"></script>
+<script src="{{ asset('assets/js/bootstrap-slider.min.js')}}"></script>
+<script src="{{ asset('assets/js/jquery.rateit.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/lightbox.min.js')}}"></script>
+<script src="{{ asset('assets/js/bootstrap-select.min.js')}}"></script>
+<script src="{{ asset('assets/js/wow.min.js')}}"></script>
 <script src="{{ asset('assets/js/scripts.js')}}"></script>
 
 <script src="{{ asset('js/searchbyName.js')}}"></script>

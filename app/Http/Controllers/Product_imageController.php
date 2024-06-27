@@ -166,8 +166,13 @@ class Product_imageController extends Controller
         $banners = Banner::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
         $best_sell = Product::where('active', self::STATUS_ACTIVE)->where('is_best_sell', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->paginate(3);
         $new = Product::where('active', self::STATUS_ACTIVE)->where('is_new', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
-        $products = Product::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();  
-        $order = Order_item::groupBy('product_name')->groupBy('product_id')->select('product_name', 'product_id', 'product_image', Order_item::raw('sum(product_quantity) as total'))->orderBy('total', 'desc')->paginate(10);
+        $products = Product::where('active', self::STATUS_ACTIVE)->orderBy('sort_order', 'ASC')->get();
+        $order = Order_item::select('order_id', 'product_name', 'product_id', 'product_image', 'product_price', DB::raw('sum(product_quantity) as total'))
+        ->where('status', 3)
+        ->groupBy('order_id', 'product_name', 'product_id', 'product_image', 'product_price')
+        ->having('total', '>=', 1)
+        ->orderBy('total', 'desc')
+        ->paginate(10);
         $productsell = DB::select('SELECT DISTINCT order_items.product_id, products.category_id, products.brand_id, products.name, products.image, products.price,products.old_price, products.description,products.amount,products.sort_order FROM `products` JOIN `order_items` ON products.id = order_items.product_id');
         $productsale = Product::where('active', self::STATUS_ACTIVE)->whereNotNull('old_price')->orderBy('id', 'DESC')->get();
         // dd($productsell);

@@ -60,7 +60,7 @@
                                         <td style="text-align: center;">{{ $category->sort_order }} </td>
                                         <td style="text-align: center;"><input type="checkbox" class="toggle-position"
                                                 value="{{ $category->id }}"
-                                                data-url="/dochoiminhan/public/activeCategory"
+                                                data-url="../activeCategory"
                                                 data-id="{{ $category->id }}" data-size="mini" data-on="Yes"
                                                 data-off="No" {{ $category->active == 1 ? 'checked' : '' }}
                                                 data-toggle="toggle" data-width="20" data-height="10"> </td>

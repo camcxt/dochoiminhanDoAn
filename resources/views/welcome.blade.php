@@ -33,7 +33,7 @@
                                     <div class="products">
                                         <div class="hot-deal-wrapper">
                                             <div class="image"> <a href="{{ route('showProduct', $sale->id) }}"> <img
-                                                        src="/dochoiminhan/public/images/{{ $sale->image }}"
+                                                        src="../images/{{ $sale->image }}"
                                                         alt=""> </a></div>
                                             <div class="sale-offer-tag">
                                                 <span>{{ 100 - intdiv(intval($sale->price) * 100, intval($sale->old_price)) }}%<br>
@@ -104,7 +104,7 @@
                                                             <div class="product-image">
                                                                 <div class="image"> <a
                                                                         href="{{ route('showProduct', $best->id) }}">
-                                                                        <img src="/dochoiminhan/public/images/{{ $best->image }}"
+                                                                        <img src="../images/{{ $best->image }}"
                                                                             alt=""> </a> </div>
                                                                 <!-- /.image -->
                                                             </div>
@@ -262,7 +262,7 @@
                                                     <div class="col col-xs-5">
                                                         <div class="product-image">
                                                             <div class="image"> <a href=""> <img
-                                                                        src="/dochoiminhan/public/images/{{ $brandList->image_url }}"
+                                                                        src="../images/{{ $brandList->image_url }}"
                                                                         alt=""> </a> </div>
                                                             <!-- /.image -->
                                                         </div>
@@ -300,7 +300,7 @@
                                                         <div class="product-image">
                                                             <div class="image"> <a
                                                                     href="{{ route('showProduct', $newProduct->id) }}"><img
-                                                                        src="/dochoiminhan/public/images/{{ $newProduct->image }}"
+                                                                        src="../images/{{ $newProduct->image }}"
                                                                         class="product-thumb" alt=""></a>
                                                             </div>
                                                             <!-- /.image -->
@@ -442,7 +442,7 @@
                                                             <div class="product-image">
                                                                 <div class="image"> <a
                                                                         href="{{ route('showProduct', $selllist->product_id) }}">
-                                                                        <img src="/dochoiminhan/public/images/{{ $selllist->image }}"
+                                                                        <img src="../images/{{ $selllist->image }}"
                                                                             alt=""> </a> </div>
                                                                 <!-- /.image -->
                                                             </div>
@@ -540,7 +540,7 @@
                                             <div class="product-image">
                                                 <div class="image"> <a
                                                         href="{{ route('showProduct', $productData->id) }}"><img
-                                                            src="/dochoiminhan/public/images/{{ $productData->image }}"
+                                                            src="../images/{{ $productData->image }}"
                                                             alt=""></a> </div>
                                                 <!-- /.image -->
                                                 @if ($productData->old_price != 0)

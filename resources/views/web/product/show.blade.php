@@ -21,7 +21,7 @@
                                         <div class="products">
                                             <div class="hot-deal-wrapper">
                                                 <div class="image"> <a href="{{ route('showProduct', $sale->id) }}">
-                                                        <img src="/dochoiminhan/public/images/{{ $sale->image }}"
+                                                        <img src="../images/{{ $sale->image }}"
                                                             alt=""> </a></div>
                                                 <div class="sale-offer-tag">
                                                     <span>{{ 100 - intdiv(intval($sale->price) * 100, intval($sale->old_price)) }}%<br>
@@ -109,7 +109,7 @@
                                                                     onclick="displayImage('../images/{{ $imgUrl }}')">
                                                             </div>
                                                         </div> --}}
-                                                       
+
                                                         <div id="productImages" class="item">
                                                             <a class="horizontal-thumb active" data-target="#owl-single-product" data-slide="#slide{{ $key++ }}" href="#">
                                                                 <img class="img-responsive"  style="height: 68px" alt="Thumbnail {{ $key++ + 1 }}"
@@ -119,7 +119,7 @@
                                                     @endforeach
                                                 @endforeach
                                             @endisset
-                                           
+
                                         </div><!-- /#owl-single-product-thumbnails -->
                                     </div><!-- /.gallery-thumbs -->
                                 </div><!-- /.single-product-gallery -->
@@ -265,7 +265,7 @@
                                             <div class="product-image">
                                                 <div class="image"> <a
                                                         href="{{ route('showProduct', $productData->id) }}"><img
-                                                            src="/dochoiminhan/public/images/{{ $productData->image }}"
+                                                            src="../images/{{ $productData->image }}"
                                                             alt=""></a> </div>
                                                 <!-- /.image -->
                                                 @if ($productData->old_price != 0)
@@ -374,6 +374,6 @@
         const largeImage = document.getElementById('largeImage');
         alargeImage.href =largeImagePath;
         largeImage.src = largeImagePath;
-        
+
     }
 </script>

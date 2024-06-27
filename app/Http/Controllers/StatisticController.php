@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Constants\Constants;
 use App\Models\Order;
 use App\Models\Order_item;
@@ -21,14 +22,20 @@ class StatisticController extends Controller
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
-    const STATUS_CANCEL= 2;
+    const STATUS_CANCEL = 2;
 
-    function index(Request $request){
+    function index(Request $request)
+    {
 
         $totalMoneyProduct = 0;
 
-        $orderBestSell = Order_item::groupBy('product_name')->groupBy('product_id')->select('product_name', 'product_id','product_image', 'product_price', Order_item::raw('sum(product_quantity) as total'))->having('total', '>', 1)->orderBy('total', 'desc')->paginate(10);
-        
+        $orderBestSell = Order_item::select('order_id', 'product_name', 'product_id', 'product_image', 'product_price', DB::raw('sum(product_quantity) as total'))
+            ->where('status', 3)
+            ->groupBy('order_id', 'product_name', 'product_id', 'product_image', 'product_price')
+            ->having('total', '>=', 1)
+            ->orderBy('total', 'desc')
+            ->paginate(10);
+
         //Tổng đơn hàng
         $totalOrder = Order::orderBy('id')->select('id')->count();
         $totalOrderComplete = Order::where('status', self::STATUS_ACTIVE)->orderBy('id')->select('id')->count();
@@ -40,24 +47,24 @@ class StatisticController extends Controller
         // Tổng số nhân viên
         $totalUser = User::where('permission', 1)->orderBy('id')->select('id')->count();
 
-         // Lấy danh sách doanh thu
+        // Lấy danh sách doanh thu
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $endDate1 = Carbon::parse($endDate)->addDay();
-        $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select( Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_products) as totalProducts'),Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
+        $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select(Order::raw('sum(total_money) as totalMoney'), Order::raw('sum(total_money) as totalMoney'), Order::raw('sum(total_products) as totalProducts'), Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
         foreach ($sales as $value) {
             $totalMoneyProduct += $value->totalMoney;
         }
 
-        $items = Order_item::Where('status',Constants::PAID)->get();
+        $items = Order_item::Where('status', Constants::PAID)->get();
         // Tạo mảng dữ liệu để vẽ biểu đồ
         $revenueData = [];
         $currentDate = Carbon::parse($startDate);
 
         while ($currentDate->lte(Carbon::parse($endDate))) {
-        $dailyRevenue = Order::where('status', self::STATUS_ACTIVE)->whereDate('created_date', $currentDate->format('Y-m-d'))->sum('total_money');
-        $revenueData[$currentDate->format('Y-m-d')] = $dailyRevenue;
-        $currentDate->addDay();    
+            $dailyRevenue = Order::where('status', self::STATUS_ACTIVE)->whereDate('created_date', $currentDate->format('Y-m-d'))->sum('total_money');
+            $revenueData[$currentDate->format('Y-m-d')] = $dailyRevenue;
+            $currentDate->addDay();
         }
 
         // số lượng sản phẩm
@@ -66,21 +73,21 @@ class StatisticController extends Controller
         $productCounts = $topProducts->pluck('amount', 'name');
         $outOfStockProduct = Product::where('amount', 0)->orderBy('amount')->get();
 
-        $viewData =[
+        $viewData = [
             'totalOrder' => $totalOrder,
             'totalOrderCancel' => $totalOrderCancel,
             'totalOrderInactive' => $totalOrderInactive,
             'totalOrderComplete' => $totalOrderComplete,
             'totalUser' => $totalUser,
-            'totalProduct'=> $totalProduct,
-            'orderBestSell'=>$orderBestSell,
+            'totalProduct' => $totalProduct,
+            'orderBestSell' => $orderBestSell,
             'items' => $items,
             'totalMoneyProduct' => $totalMoneyProduct,
             'topProducts' => $topProducts,
-            'outOfStockProduct'=> $outOfStockProduct,
-      
+            'outOfStockProduct' => $outOfStockProduct,
+
         ];
-        return view('admin/statistic/statistics', compact('sales', 'revenueData','productCounts'), $viewData);
+        return view('admin/statistic/statistics', compact('sales', 'revenueData', 'productCounts'), $viewData);
     }
     public function export(Request $request)
     {
@@ -88,12 +95,12 @@ class StatisticController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $endDate1 = Carbon::parse($endDate)->addDay();
-        $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select( Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_money) as totalMoney'),Order::raw('sum(total_products) as totalProducts'),Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
+        $sales = Order::whereBetween('created_date', [$startDate, $endDate1])->where('status', self::STATUS_ACTIVE)->select(Order::raw('sum(total_money) as totalMoney'), Order::raw('sum(total_money) as totalMoney'), Order::raw('sum(total_products) as totalProducts'), Order::raw('DATE(created_date) as day'))->groupBy('day')->get();
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $i = 3;
 
-        
+
         $styleArrayTitle = [
             'font' => [
                 'bold' => true,
@@ -125,12 +132,12 @@ class StatisticController extends Controller
                 ],
             ],
         ];
-        
+
         $sheet->setCellValue("D3", "Ngày bán");
         $sheet->setCellValue("E3", "Số lượng");
         $sheet->setCellValue("F3", "Tổng tiền");
 
-        foreach ( $sales as $item) {
+        foreach ($sales as $item) {
             $i++;
 
             $column = $i;
@@ -158,7 +165,5 @@ class StatisticController extends Controller
         header("Cache-Control: cache, must-revalidate");
         header("Pragma: public");
         return $writer->save("php://output");
-        
     }
-  
 }

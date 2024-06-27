@@ -57,14 +57,14 @@
                                     <tr>
                                         <td style="text-align: center;">{{ $brandKey + 1 }}</td>
                                         <td style="text-align: center;"><img
-                                                src="../public/images/{{ $brandData->image_url }}" width="150px"
+                                                src="../images/{{ $brandData->image_url }}" width="150px"
                                                 alt="No image"></td>
                                         <td style="text-align: left;">{{ $brandData->name }}</td>
                                         <td style="text-align: center;"><a href="{{ $brandData->link }}"
                                                 target="_blank">{{ $brandData->link }}</a></td>
                                         <td style="text-align: center;"><input type="checkbox" class="toggle-position"
                                                 value="{{ $brandData->id }}"
-                                                data-url="/dochoiminhan/public/activeBrand" data-size="mini"
+                                                data-url="../activeBrand" data-size="mini"
                                                 data-id="{{ $brandData->id }}" data-on="Yes" data-off="No"
                                                 {{ $brandData->active == 1 ? 'checked' : '' }} data-toggle="toggle"
                                                 data-width="20" data-height="10"></td>

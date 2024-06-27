@@ -152,7 +152,7 @@
                                     <tr>
                                         <td style="text-align: center;"> {{ $productKey + 1 }} </td>
                                         <td style="text-align: center;"><img
-                                                src="/dochoiminhan/public/images/{{ $product->image }}"
+                                                src="../images/{{ $product->image }}"
                                                 width="100px" alt="No Image"></td>
                                         <td style="text-align: center;">{{ $product->name }}</td>
                                         @foreach ($brands as $brand)
@@ -189,7 +189,7 @@
                                             id="idp">
                                         <td style="text-align: center;"><input type="checkbox"
                                                 class="toggle-position mini" value="{{ $product->id }}"
-                                                data-url="/dochoiminhan/public/active" data-id="{{ $product->id }}"
+                                                data-url="../active" data-id="{{ $product->id }}"
                                                 data-on="Yes" data-off="No" data-size="mini" data-toggle="toggle"
                                                 data-width="15" data-height="10"
                                                 {{ $product->active == 1 ? 'checked' : '' }}></td>

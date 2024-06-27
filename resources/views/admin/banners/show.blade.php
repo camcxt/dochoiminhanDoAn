@@ -52,12 +52,12 @@
                                     <tr>
                                         <td style="text-align: center;">{{ $bannerKey + 1 }}</td>
                                         <td style="text-align: center;"><img
-                                                src="../public/images/{{ $bannerList->image_url }}" style="width: 150px"
+                                                src="../images/{{ $bannerList->image_url }}" style="width: 150px"
                                                 alt="No Image"></td>
                                         <td style="text-align: left;">{{ $bannerList->title }}</td>
                                         <td style="text-align: center;"><input type="checkbox" class="toggle-position"
                                                 value="{{ $bannerList->id }}" data-size="mini"
-                                                data-url="/dochoiminhan/public/activeBanner"
+                                                data-url="../activeBanner"
                                                 data-id="{{ $bannerList->id }}" data-on="Yes" data-off="No"
                                                 {{ $bannerList->active == 1 ? 'checked' : '' }} data-toggle="toggle"
                                                 data-width="20" data-height="10"></td>

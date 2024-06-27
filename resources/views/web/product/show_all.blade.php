@@ -65,7 +65,7 @@
                                         <div class="products">
                                             <div class="hot-deal-wrapper">
                                                 <div class="image"> <a href="{{ route('showProduct', $sale->id) }}">
-                                                        <img src="/dochoiminhan/public/images/{{ $sale->image }}"
+                                                        <img src="../images/{{ $sale->image }}"
                                                             alt=""> </a></div>
                                                 <div class="sale-offer-tag">
                                                     <span>{{ 100 - intdiv(intval($sale->price) * 100, intval($sale->old_price)) }}%<br>
@@ -133,7 +133,7 @@
                                                 <div class="product-image">
                                                     <div class="image"> <a
                                                             href="{{ route('showProduct', $productList->id) }}"><img
-                                                                src="/dochoiminhan/public/images/{{ $productList->image }}"
+                                                                src="../images/{{ $productList->image }}"
                                                                 class="product-thumb" alt=""></a> </div>
                                                     <!-- /.image -->
                                                     @if ($productList->old_price != 0)
@@ -239,9 +239,9 @@
                             <p>
                                 Hiện tại không có sản phẩm thương hiệu không có
                             </p>
-                        </div>    
+                        </div>
                     @endif
-                    
+
                 </div>
             </div>
         </div>

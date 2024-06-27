@@ -12,14 +12,6 @@
 
     @if (Request::route()->getName() == 'shop')
         <title>Minh An | Đồ chơi thông minh</title>
-    @elseif (Request::route()->getName() == 'showbyView')
-        @if (url()->full() == 'http://localhost:7882/dochoiminhan/public/showbyView/1')
-            <title>Minh An | Top Sellers </title>
-        @elseif (url()->full() == 'http://localhost:7882/dochoiminhan/public/showbyView/2')
-            <title>Minh An | Recently Viewed </title>
-        @elseif (url()->full() == 'http://localhost:7882/dochoiminhan/public/showbyView/3')
-            <title>Minh An | Top New </title>
-        @endif
     @elseif (Request::route()->getName() == 'show_Cart')
         <title>Minh An | Giỏ hàng</title>
     @elseif (Request::route()->getName() == 'showOrder')
@@ -105,11 +97,11 @@
                         <!-- ============================================================= LOGO ============================================================= -->
                         @if (isset(Auth::user()->username))
                             <div class="logo"> <a href="{{ route('home') }}"> <img style="height: 100px;"
-                                        src="\dochoiminhan\public\images\logo\dochoiminhan2.png" alt="logo"> </a>
+                                        src="../images/logo/dochoiminhan2.png" alt="logo"> </a>
                             </div>
                         @else
                             <div class="logo"> <a href="{{ route('trangchu') }}"> <img style="height: 100px;"
-                                        src="\dochoiminhan\public\images\logo\dochoiminhan2.png" alt="logo"> </a>
+                                        src="../images/logo/dochoiminhan2.png" alt="logo"> </a>
                             </div>
                         @endif
                         <!-- /.logo -->
@@ -222,16 +214,16 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('assets\js\jquery-1.11.1.min.js')}}"></script> 
-<script src="{{ asset('assets\js\bootstrap.min.js')}}"></script> 
-<script src="{{ asset('assets\js\bootstrap-hover-dropdown.min.js')}}"></script> 
-<script src="{{ asset('assets\js\owl.carousel.min.js')}}"></script> 
-<script src="{{ asset('assets\js\echo.min.js')}}"></script> 
-<script src="{{ asset('assets\js\jquery.easing-1.3.min.js')}}"></script> 
-<script src="{{ asset('assets\js\bootstrap-slider.min.js')}}"></script> 
-<script src="{{ asset('assets\js\jquery.rateit.min.js')}}"></script> 
-<script src="{{ asset('assets\js\bootstrap-select.min.js')}}"></script> 
-<script src="{{ asset('assets\js\wow.min.js')}}"></script> 
+<script src="{{ asset('assets\js\jquery-1.11.1.min.js')}}"></script>
+<script src="{{ asset('assets\js\bootstrap.min.js')}}"></script>
+<script src="{{ asset('assets\js\bootstrap-hover-dropdown.min.js')}}"></script>
+<script src="{{ asset('assets\js\owl.carousel.min.js')}}"></script>
+<script src="{{ asset('assets\js\echo.min.js')}}"></script>
+<script src="{{ asset('assets\js\jquery.easing-1.3.min.js')}}"></script>
+<script src="{{ asset('assets\js\bootstrap-slider.min.js')}}"></script>
+<script src="{{ asset('assets\js\jquery.rateit.min.js')}}"></script>
+<script src="{{ asset('assets\js\bootstrap-select.min.js')}}"></script>
+<script src="{{ asset('assets\js\wow.min.js')}}"></script>
 <script src="{{ asset('assets\js\scripts.js')}}"></script>
 
 <script>
@@ -240,5 +232,5 @@
         setTimeout(function() {
             $('#notification').fadeOut('slow');
         }, 5000); // 5000 milliseconds = 5 seconds
-    });   
+    });
 </script>
